@@ -1,11 +1,15 @@
 <script lang="ts">
   import Joke from "./lib/Joke.svelte";
+import type { JokeProps } from "./types/Joke";
+  
+  let likedJokes: JokeProps[] = [];
+  let dislikedJokes: JokeProps[] = [];
 </script>
 
 <main>
   <h1>Joker with Svelte :)</h1>
 
-  <Joke />
+  <Joke {likedJokes} {dislikedJokes} />
 </main>
 
 <style>

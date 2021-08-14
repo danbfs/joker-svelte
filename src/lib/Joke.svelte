@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Joke } from "src/types/Joke";
+  import type { JokeProps } from "src/types/Joke";
   import { library } from "@fortawesome/fontawesome-svg-core";
   import {
     faThumbsDown as SolidDislike,
@@ -14,10 +14,13 @@
   import { getJoke } from "../utils/getJoke";
   import JokeCard from "./JokeCard.svelte";
 
-  let joke: Joke;
-  let fetching = false;
+  export let likedJokes: JokeProps[];
+  export let dislikedJokes: JokeProps[];
   let isLiked = false;
   let isDisliked = false;
+
+  let joke: JokeProps;
+  let fetching = false;
 
   const fetchNewJoke = async () => {
     fetching = true;
@@ -29,13 +32,18 @@
   if (!joke) fetchNewJoke();
 
   const likeJoke = () => {
-    isLiked = !isLiked;
-    isDisliked = false;
+    likedJokes.push(joke);
+    dislikedJokes = dislikedJokes.filter(({id}) => id !== joke.id);
   };
   const dislikeJoke = () => {
-    isDisliked = !isDisliked;
-    isLiked = false;
+    dislikedJokes.push(joke);
+    likedJokes = likedJokes.filter(({id}) => id !== joke.id);
   };
+
+  $: {
+    isLiked = likedJokes.includes(joke);
+    isDisliked = dislikedJokes.includes(joke);
+  }
 
   library.add(RegularDislike);
   library.add(RegularLike);

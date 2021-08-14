@@ -9,7 +9,7 @@ type CommonJokeProps = {
   safe: boolean;
 };
 
-export type Joke =
+export type JokeProps =
   | (CommonJokeProps & {
       type: 'twopart';
       setup: string;

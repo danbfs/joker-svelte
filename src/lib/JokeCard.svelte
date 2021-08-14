@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Joke } from "../types/Joke";
+  import type { JokeProps } from "../types/Joke";
 
-  export let joke: Joke;
+  export let joke: JokeProps;
   let renderedJoke: string = "Loading...";
 
   $: {
