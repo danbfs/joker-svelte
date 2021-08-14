@@ -4,12 +4,14 @@ import type { Joke } from "../types/Joke";
   export let joke: Joke
   let renderedJoke: string = 'Loading...'
 
-  if (joke?.type === "single") {
-	  renderedJoke = joke.joke
-  } else if (joke?.type === 'twopart') {
-	  renderedJoke = `${joke.setup}\nR: ${joke.delivery}`
-  } else {
+  $: {
+	if (joke?.type === "single") {
+	  renderedJoke = joke.joke 
+	} else if (joke?.type === 'twopart') {
+	  renderedJoke = `${joke.setup}\n\n${joke.delivery}`
+  	} else {
 	  renderedJoke = 'Sorry, something went wrong :('
+  	}
   }
 
 </script>
