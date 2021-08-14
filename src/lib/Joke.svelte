@@ -1,27 +1,26 @@
 <script lang="ts">
-import type { Joke } from "src/types/Joke";
+  import type { Joke } from "src/types/Joke";
 
-import { getJoke } from "../utils/getJoke";
-import JokeCard from "./JokeCard.svelte";
+  import { getJoke } from "../utils/getJoke";
+  import JokeCard from "./JokeCard.svelte";
 
-  let joke: Joke
-  let fetching = false
+  let joke: Joke;
+  let fetching = false;
 
   const fetchNewJoke = async () => {
-    fetching = true
-    const newJoke = await getJoke()
-    joke = newJoke
-    fetching = false
-  }
+    fetching = true;
+    const newJoke = await getJoke();
+    joke = newJoke;
+    fetching = false;
+  };
 
-  if (!joke) fetchNewJoke()
-
+  if (!joke) fetchNewJoke();
 </script>
 
 <JokeCard {joke} />
 
 <button on:click={fetchNewJoke}>
-  {fetching ? 'Fetching...' : 'Get new joke'} 
+  {fetching ? "Fetching..." : "Get new joke"}
 </button>
 
 <style>

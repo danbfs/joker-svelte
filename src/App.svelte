@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Joke from './lib/Joke.svelte'
+  import Joke from "./lib/Joke.svelte";
 </script>
 
 <main>
@@ -10,8 +10,8 @@
 
 <style>
   :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 
   main {
@@ -29,7 +29,6 @@
     margin: 2rem auto;
     max-width: 14rem;
   }
-
 
   @media (min-width: 480px) {
     h1 {

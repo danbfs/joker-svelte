@@ -1,19 +1,18 @@
 <script lang="ts">
-import type { Joke } from "../types/Joke";
+  import type { Joke } from "../types/Joke";
 
-  export let joke: Joke
-  let renderedJoke: string = 'Loading...'
+  export let joke: Joke;
+  let renderedJoke: string = "Loading...";
 
   $: {
-	if (joke?.type === "single") {
-	  renderedJoke = joke.joke 
-	} else if (joke?.type === 'twopart') {
-	  renderedJoke = `${joke.setup}\n\n${joke.delivery}`
-  	} else {
-	  renderedJoke = 'Sorry, something went wrong :('
-  	}
+    if (joke?.type === "single") {
+      renderedJoke = joke.joke;
+    } else if (joke?.type === "twopart") {
+      renderedJoke = `${joke.setup}\n\n${joke.delivery}`;
+    } else {
+      renderedJoke = "Sorry, something went wrong :(";
+    }
   }
-
 </script>
 
 <p>{renderedJoke}</p>

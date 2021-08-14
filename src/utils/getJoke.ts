@@ -1,12 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const getJoke = async () => {
-	const baseUrl =
-		"https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit";
-	
-	const joke = await axios.get(baseUrl)
+  const baseUrl =
+    "https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit";
 
-	console.log(joke)
+  const joke = await axios.get(baseUrl);
 
-	return joke.data
-}
+  return joke.data;
+};
