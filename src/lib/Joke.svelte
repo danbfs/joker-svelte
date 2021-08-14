@@ -32,10 +32,12 @@
   if (!joke) fetchNewJoke();
 
   const likeJoke = () => {
+    if (isLiked) return
     likedJokes.push(joke);
     dislikedJokes = dislikedJokes.filter(({id}) => id !== joke.id);
   };
   const dislikeJoke = () => {
+    if (isDisliked) return
     dislikedJokes.push(joke);
     likedJokes = likedJokes.filter(({id}) => id !== joke.id);
   };
@@ -60,7 +62,7 @@
   />
 </button>
 <button on:click={fetchNewJoke}>
-  {fetching ? "Fetching..." : "Get new joke"}
+  {fetching ? "Fetching...." : "Get new joke"}
 </button>
 <button class="icon" on:click={likeJoke}>
   <FontAwesomeIcon
@@ -69,7 +71,23 @@
   />
 </button>
 
+{#if !!likedJokes.length}
+<h2>Liked jokes</h2>
+{/if}
+{#each likedJokes as likedJoke}
+<JokeCard joke={likedJoke} />
+{/each}
+
 <style>
+
+  h2 {
+    color: #ff3e00;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.1;
+    margin: 2rem auto;
+    max-width: 14rem;
+  }
   button {
     font-family: inherit;
     font-size: inherit;
