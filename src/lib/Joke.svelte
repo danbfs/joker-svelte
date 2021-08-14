@@ -1,11 +1,23 @@
 <script lang="ts">
   import type { Joke } from "src/types/Joke";
+  import { library } from "@fortawesome/fontawesome-svg-core";
+  import {
+    faThumbsDown as SolidDislike,
+    faThumbsUp as SolidLike,
+  } from "@fortawesome/free-solid-svg-icons";
+  import {
+    faThumbsDown as RegularDislike,
+    faThumbsUp as RegularLike,
+  } from "@fortawesome/free-regular-svg-icons";
+  import { FontAwesomeIcon } from "fontawesome-svelte";
 
   import { getJoke } from "../utils/getJoke";
   import JokeCard from "./JokeCard.svelte";
 
   let joke: Joke;
   let fetching = false;
+  let isLiked = false;
+  let isDisliked = false;
 
   const fetchNewJoke = async () => {
     fetching = true;
@@ -15,12 +27,38 @@
   };
 
   if (!joke) fetchNewJoke();
+
+  const likeJoke = () => {
+    isLiked = !isLiked;
+    isDisliked = false;
+  };
+  const dislikeJoke = () => {
+    isDisliked = !isDisliked;
+    isLiked = false;
+  };
+
+  library.add(RegularDislike);
+  library.add(RegularLike);
+  library.add(SolidDislike);
+  library.add(SolidLike);
 </script>
 
 <JokeCard {joke} />
 
+<button class="icon" on:click={dislikeJoke}>
+  <FontAwesomeIcon
+    icon={isDisliked ? SolidDislike : RegularDislike}
+    fill="rgb(255, 62, 0)"
+  />
+</button>
 <button on:click={fetchNewJoke}>
   {fetching ? "Fetching..." : "Get new joke"}
+</button>
+<button class="icon" on:click={likeJoke}>
+  <FontAwesomeIcon
+    icon={isLiked ? SolidLike : RegularLike}
+    fill="rgb(255, 62, 0)"
+  />
 </button>
 
 <style>
@@ -38,6 +76,9 @@
     cursor: pointer;
   }
 
+  button.icon {
+    width: fit-content;
+  }
   button:focus {
     border: 2px solid #ff3e00;
   }
