@@ -11,11 +11,11 @@ type CommonJokeProps = {
 
 export type Joke =
   | (CommonJokeProps & {
-      type: "twopart";
+      type: 'twopart';
       setup: string;
       delivery: string;
     })
   | (CommonJokeProps & {
-      type: "single";
+      type: 'single';
       joke: string;
     });
