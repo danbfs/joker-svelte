@@ -21,7 +21,9 @@
   export let dislikedJokes: JokeProps[];
   let isLiked = false;
   let isDisliked = false;
-  let shouldShowLikedJokes = JSON.parse(window.localStorage.getItem('shouldShowLikedJokes'));
+  let shouldShowLikedJokes = JSON.parse(
+    window.localStorage.getItem("shouldShowLikedJokes")
+  );
 
   let joke: JokeProps;
   let fetching = false;
@@ -58,9 +60,12 @@
   }
 
   afterUpdate(() => {
-    window.localStorage.setItem('likedJokes', JSON.stringify(likedJokes))
-    window.localStorage.setItem('dislikedJokes', JSON.stringify(dislikedJokes))
-    window.localStorage.setItem('shouldShowLikedJokes', JSON.stringify(shouldShowLikedJokes))
+    window.localStorage.setItem("likedJokes", JSON.stringify(likedJokes));
+    window.localStorage.setItem("dislikedJokes", JSON.stringify(dislikedJokes));
+    window.localStorage.setItem(
+      "shouldShowLikedJokes",
+      JSON.stringify(shouldShowLikedJokes)
+    );
   });
 
   library.add(RegularDislike);
