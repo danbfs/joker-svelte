@@ -10,7 +10,7 @@
     } else if (joke?.type === "twopart") {
       renderedJoke = `${joke.setup}\n\n${joke.delivery}`;
     } else {
-      renderedJoke = "Sorry, something went wrong :(";
+      renderedJoke = "Loading...";
     }
   }
 </script>

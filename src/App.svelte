@@ -2,8 +2,8 @@
   import Joke from "./lib/Joke.svelte";
 import type { JokeProps } from "./types/Joke";
   
-  let likedJokes: JokeProps[] = [];
-  let dislikedJokes: JokeProps[] = [];
+  let likedJokes: JokeProps[] = JSON.parse(window.localStorage.getItem('likedJokes'));
+  let dislikedJokes: JokeProps[] = JSON.parse(window.localStorage.getItem('dislikedJokes'));
 </script>
 
 <main>

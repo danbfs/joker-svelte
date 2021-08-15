@@ -4,6 +4,8 @@
   import {
     faThumbsDown as SolidDislike,
     faThumbsUp as SolidLike,
+    faEyeSlash as HiddenIcon,
+    faEye as VisibleIcon,
   } from "@fortawesome/free-solid-svg-icons";
   import {
     faThumbsDown as RegularDislike,
@@ -13,11 +15,13 @@
 
   import { getJoke } from "../utils/getJoke";
   import JokeCard from "./JokeCard.svelte";
+  import { afterUpdate } from "svelte";
 
   export let likedJokes: JokeProps[];
   export let dislikedJokes: JokeProps[];
   let isLiked = false;
   let isDisliked = false;
+  let shouldShowLikedJokes = JSON.parse(window.localStorage.getItem('shouldShowLikedJokes'));
 
   let joke: JokeProps;
   let fetching = false;
@@ -32,14 +36,20 @@
   if (!joke) fetchNewJoke();
 
   const likeJoke = () => {
-    if (isLiked) return
+    if (isLiked) return;
     likedJokes.push(joke);
-    dislikedJokes = dislikedJokes.filter(({id}) => id !== joke.id);
+    likedJokes = likedJokes;
+    dislikedJokes = dislikedJokes.filter(({ id }) => id !== joke.id);
   };
   const dislikeJoke = () => {
-    if (isDisliked) return
+    if (isDisliked) return;
     dislikedJokes.push(joke);
-    likedJokes = likedJokes.filter(({id}) => id !== joke.id);
+    dislikedJokes = dislikedJokes;
+    likedJokes = likedJokes.filter(({ id }) => id !== joke.id);
+  };
+
+  const toggleShouldShowLikedJokes = () => {
+    shouldShowLikedJokes = !shouldShowLikedJokes;
   };
 
   $: {
@@ -47,10 +57,18 @@
     isDisliked = dislikedJokes.includes(joke);
   }
 
+  afterUpdate(() => {
+    window.localStorage.setItem('likedJokes', JSON.stringify(likedJokes))
+    window.localStorage.setItem('dislikedJokes', JSON.stringify(dislikedJokes))
+    window.localStorage.setItem('shouldShowLikedJokes', JSON.stringify(shouldShowLikedJokes))
+  });
+
   library.add(RegularDislike);
   library.add(RegularLike);
   library.add(SolidDislike);
   library.add(SolidLike);
+  library.add(VisibleIcon);
+  library.add(HiddenIcon);
 </script>
 
 <JokeCard {joke} />
@@ -71,22 +89,30 @@
   />
 </button>
 
-{#if !!likedJokes.length}
-<h2>Liked jokes</h2>
+<h2 on:click={toggleShouldShowLikedJokes}>
+  Liked jokes <FontAwesomeIcon
+    icon={shouldShowLikedJokes ? HiddenIcon : VisibleIcon}
+    fill="rgb(255, 62, 0)"
+    style="width: 24px; height: 24px"
+  />
+</h2>
+{#if !!likedJokes.length && shouldShowLikedJokes}
+  {#each likedJokes as likedJoke}
+    <JokeCard joke={likedJoke} />
+  {/each}
 {/if}
-{#each likedJokes as likedJoke}
-<JokeCard joke={likedJoke} />
-{/each}
 
 <style>
-
   h2 {
     color: #ff3e00;
     font-size: 2rem;
     font-weight: 100;
     line-height: 1.1;
     margin: 2rem auto;
-    max-width: 14rem;
+    width: 14rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    cursor: pointer;
   }
   button {
     font-family: inherit;
